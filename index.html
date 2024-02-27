@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consumo de API REST con Bootstrap</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="#">Acerca de</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+
+  <div class="container">
+    <h1 class="mt-5 mb-3">Productos de Fake Store API</h1>
+    <div id="product-list" class="row"></div>
+  </div>
+
+  <!-- Bootstrap JS and Fetch API -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Fetching data from Fake Store API
+    fetch('https://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(data => {
+        // Loop through each product and create HTML elements to display them
+        data.forEach(product => {
+          const productCard = `
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                <div class="card-body">
+                  <h5 class="card-title">${product.title}</h5>
+                  <p class="card-text">${product.description}</p>
+                  <p class="card-text">Price: $${product.price}</p>
+                </div>
+              </div>
+            </div>
+          `;
+          // Append each product card to the product-list element
+          document.getElementById('product-list').innerHTML += productCard;
+        });
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  </script>
+</body>
+</html>
